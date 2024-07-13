@@ -35,7 +35,7 @@ public class StockController {
         return stockService.getStockOperations(userId).stream().map(stockOperationConverter::toDTO).toList();
     }
 
-    @PutMapping("/operation")
+    @PostMapping("/operation")
     public StockOperationDTO addStockOperation (@RequestBody StockOperationDTO stockOperation) {
         return stockOperationConverter.toDTO(stockService.addStockOperation(stockOperationConverter.toEntity(stockOperation)));
     }

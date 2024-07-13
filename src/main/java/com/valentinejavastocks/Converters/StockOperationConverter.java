@@ -17,6 +17,8 @@ public class StockOperationConverter {
                 .amount(stockOperation.getAmount())
                 .price(stockOperation.getPrice())
                 .customerId(stockOperation.getCustomer().getId())
+                .date(stockOperation.getDate())
+                .type(stockOperation.getType())
                 .build();
     }
 
@@ -26,6 +28,8 @@ public class StockOperationConverter {
                 .amount(stockOperationDTO.getAmount())
                 .price(stockOperationDTO.getPrice())
                 .customer(customerConverter.toEntity(stockOperationDTO.getCustomerId()))
+                .date(stockOperationDTO.getDate())
+                .type(stockOperationDTO.getType())
                 .build();
     }
 }

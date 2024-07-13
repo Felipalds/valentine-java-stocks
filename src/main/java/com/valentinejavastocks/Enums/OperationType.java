@@ -1,5 +1,7 @@
 package com.valentinejavastocks.Enums;
 
-public enum OperationType {
+import java.io.Serializable;
+
+public enum OperationType implements Serializable {
     BUY, SELL
 }
