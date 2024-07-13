@@ -1,7 +1,10 @@
 package com.valentinejavastocks.Controllers;
 
 import com.valentinejavastocks.Converters.StockOperationConverter;
+import com.valentinejavastocks.DTOs.GetStatusDTO;
 import com.valentinejavastocks.DTOs.StockOperationDTO;
+import com.valentinejavastocks.DTOs.StockStatusDTO;
+import com.valentinejavastocks.Domains.Customer;
 import com.valentinejavastocks.Domains.StockOperation;
 import com.valentinejavastocks.Services.StockService;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +28,14 @@ public class StockController {
         return new ResponseEntity<>("Hello world", HttpStatus.OK);
     }
 
-    @GetMapping
-    public List<StockOperationDTO> getStockOperations () {
-        return stockService.getAllStockOperations().stream().map(stockOperationConverter::toDTO).toList();
+    @PostMapping("/status")
+    public ResponseEntity<?> getStatusFromAllOperations (@RequestParam Long userId, @RequestBody GetStatusDTO getStatusDTO) {
+        try {
+           StockStatusDTO status = stockService.getStatus(userId, getStatusDTO);
+           return new ResponseEntity<>(status, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
     }
 
     @GetMapping("/operation")
