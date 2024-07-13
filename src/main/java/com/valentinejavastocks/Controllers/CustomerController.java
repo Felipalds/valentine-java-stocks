@@ -2,7 +2,10 @@ package com.valentinejavastocks.Controllers;
 
 import com.valentinejavastocks.Converters.CustomerConverter;
 import com.valentinejavastocks.DTOs.CustomerDTO;
+import com.valentinejavastocks.DTOs.SignInDTO;
 import com.valentinejavastocks.Exceptions.CustomerAlreadyExistsException;
+import com.valentinejavastocks.Exceptions.CustomerNotFoundException;
+import com.valentinejavastocks.Exceptions.InvalidPasswordException;
 import com.valentinejavastocks.Services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,5 +33,16 @@ public class CustomerController {
         }
     }
 
+    @PostMapping("/sign-in")
+    public ResponseEntity<?> signIn (@RequestBody SignInDTO signInDTO) {
+        try {
+            CustomerDTO customerDTO = converter.toDTO(service.auth(signInDTO));
+            return new ResponseEntity<>(customerDTO, HttpStatus.OK);
+        } catch (CustomerNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (InvalidPasswordException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
+    }
 
 }
