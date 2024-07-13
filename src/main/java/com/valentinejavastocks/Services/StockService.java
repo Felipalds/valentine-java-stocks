@@ -18,7 +18,7 @@ public class StockService {
     private final CustomerRepository customerRepository;
 
     public List<StockOperation> getAllStockOperations () {
-        return this.stockOperationRepository.findAll();
+        return stockOperationRepository.findAll();
     }
 
     public StockOperation addStockOperation (StockOperation stockOperation) {

@@ -2,23 +2,30 @@ package com.valentinejavastocks.Converters;
 
 import com.valentinejavastocks.DTOs.StockOperationDTO;
 import com.valentinejavastocks.Domains.StockOperation;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
+@Component
 public class StockOperationConverter {
-    public static StockOperationDTO toDTO(StockOperation stockOperation) {
+
+    private final CustomerConverter customerConverter;
+
+    public StockOperationDTO toDTO(StockOperation stockOperation) {
         return StockOperationDTO.builder()
                 .stock(stockOperation.getStock())
                 .amount(stockOperation.getAmount())
                 .price(stockOperation.getPrice())
-                .user(CustomerConverter.toDTO(stockOperation.getCustomer()))
+                .customerId(stockOperation.getCustomer().getId())
                 .build();
     }
 
-    public static StockOperation toEntity(StockOperationDTO stockOperationDTO) {
+    public StockOperation toEntity(StockOperationDTO stockOperationDTO) {
         return StockOperation.builder()
                 .stock(stockOperationDTO.getStock())
                 .amount(stockOperationDTO.getAmount())
                 .price(stockOperationDTO.getPrice())
-                .customer(CustomerConverter.toEntity(stockOperationDTO.getUser()))
+                .customer(customerConverter.toEntity(stockOperationDTO.getCustomerId()))
                 .build();
     }
 }

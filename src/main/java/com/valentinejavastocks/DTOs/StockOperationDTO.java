@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Builder
 public class StockOperationDTO implements Serializable {
     private Long id;
-    private CustomerDTO user;
+    private Long customerId;
     private String stock;
     private int amount;
     private BigDecimal price;

@@ -1,10 +1,19 @@
 package com.valentinejavastocks.Converters;
 
-import com.valentinejavastocks.DTOs.CustomerDTO;
 import com.valentinejavastocks.Domains.Customer;
+import com.valentinejavastocks.DTOs.CustomerDTO;
+import com.valentinejavastocks.Exceptions.CustomerNotFoundException;
+import com.valentinejavastocks.Repositories.CustomerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
+@Component
 public class CustomerConverter {
-    public static CustomerDTO toDTO(Customer customer) {
+
+    private final CustomerRepository customerRepository;
+
+    public CustomerDTO toDTO(Customer customer) {
         return CustomerDTO.builder()
                 .id(customer.getId())
                 .name(customer.getName())
@@ -13,12 +22,15 @@ public class CustomerConverter {
                 .build();
     }
 
-    public static Customer toEntity(CustomerDTO customerDTO) {
-        Customer customer = new Customer();
-        customer.setId(customerDTO.getId());
-        customer.setName(customerDTO.getName());
-        customer.setPassword(customerDTO.getPassword());
-        customer.setEmail(customerDTO.getEmail());
-        return customer;
+    public  Customer toEntity(Long customerId) {
+        return customerRepository.findById(customerId).orElseThrow(CustomerNotFoundException::new);
+    }
+
+    public Customer toEntity (CustomerDTO dto) {
+        return Customer.builder()
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .password(dto.getPassword())
+                .build();
     }
 }

@@ -1,17 +1,15 @@
 package com.valentinejavastocks.Domains;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customer", uniqueConstraints = { @UniqueConstraint(columnNames = "email")})
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Customer {
 
     @Id
